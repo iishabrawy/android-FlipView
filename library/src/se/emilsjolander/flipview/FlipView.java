@@ -1,6 +1,5 @@
 package se.emilsjolander.flipview;
 
-import se.emilsjolander.flipview.Recycler.Scrap;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
@@ -9,13 +8,8 @@ import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
-import android.graphics.Camera;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Paint;
+import android.graphics.*;
 import android.graphics.Paint.Style;
-import android.graphics.Rect;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.VelocityTrackerCompat;
 import android.util.AttributeSet;
@@ -29,15 +23,16 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 import android.widget.Scroller;
+import se.emilsjolander.flipview.Recycler.Scrap;
 
 public class FlipView extends FrameLayout {
 
 	public interface OnFlipListener {
-		public void onFlippedToPage(FlipView v, int position, long id);
+		void onFlippedToPage(FlipView v, int position, long id);
 	}
 
 	public interface OnOverFlipListener {
-		public void onOverFlip(FlipView v, OverFlipMode mode,
+		void onOverFlip(FlipView v, OverFlipMode mode,
 				boolean overFlippingPrevious, float overFlipDistance,
 				float flipDistancePerPage);
 	}
@@ -152,6 +147,9 @@ public class FlipView extends FrameLayout {
 	private Paint mShadePaint = new Paint();
 	private Paint mShinePaint = new Paint();
 
+	private boolean mDrawShadow;
+	int mShadowColor;
+
 	public FlipView(Context context) {
 		this(context, null);
 	}
@@ -173,6 +171,9 @@ public class FlipView extends FrameLayout {
 		setOverFlipMode(OverFlipMode.values()[a.getInt(
 				R.styleable.FlipView_overFlipMode, 0)]);
 
+		mDrawShadow = a.getBoolean(R.styleable.FlipView_drawShadow, true);
+		mShadowColor = a.getColor(R.styleable.FlipView_shadowColor, Color.BLACK);
+
 		a.recycle();
 
 		init();
@@ -187,9 +188,9 @@ public class FlipView extends FrameLayout {
 		mMinimumVelocity = configuration.getScaledMinimumFlingVelocity();
 		mMaximumVelocity = configuration.getScaledMaximumFlingVelocity();
 
-		mShadowPaint.setColor(Color.BLACK);
+		mShadowPaint.setColor(mShadowColor);
 		mShadowPaint.setStyle(Style.FILL);
-		mShadePaint.setColor(Color.BLACK);
+		mShadePaint.setColor(mShadowColor);
 		mShadePaint.setStyle(Style.FILL);
 		mShinePaint.setColor(Color.WHITE);
 		mShinePaint.setStyle(Style.FILL);
@@ -755,7 +756,7 @@ public class FlipView extends FrameLayout {
 			drawChild(canvas, p.v, 0);
 		}
 
-		drawPreviousShadow(canvas);
+		if(mDrawShadow) drawPreviousShadow(canvas);
 		canvas.restore();
 	}
 
@@ -791,7 +792,7 @@ public class FlipView extends FrameLayout {
 			drawChild(canvas, p.v, 0);
 		}
 
-		drawNextShadow(canvas);
+		if(mDrawShadow) drawNextShadow(canvas);
 		canvas.restore();
 	}
 
@@ -839,7 +840,7 @@ public class FlipView extends FrameLayout {
 		setDrawWithLayer(mCurrentPage.v, true);
 		drawChild(canvas, mCurrentPage.v, 0);
 
-		drawFlippingShadeShine(canvas);
+		if(mDrawShadow) drawFlippingShadeShine(canvas);
 
 		mCamera.restore();
 		canvas.restore();

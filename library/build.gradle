@@ -8,8 +8,8 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion '18.1.1'
+    compileSdkVersion 22
+    buildToolsVersion '22.0.1'
 
     sourceSets {
         main {
@@ -20,4 +20,4 @@ android {
     }
 }
 
-apply from: '../maven_push.gradle'
+//apply from: '../maven_push.gradle'

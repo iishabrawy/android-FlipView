@@ -10,6 +10,9 @@
             <enum name="glow" value="0"/>
             <enum name="rubber_band" value="1"/>
         </attr>
+
+        <attr name="drawShadow" format="boolean" />
+        <attr name="shadowColor" format="color" />
     </declare-styleable>
     
 </resources>
