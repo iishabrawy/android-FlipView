@@ -56,7 +56,6 @@ public class FlipView extends FrameLayout {
 	private static final int INVALID_FLIP_DISTANCE = -1;
 
 	private static final int PEAK_ANIM_DURATION = 600;// in ms
-	private static final int MAX_SINGLE_PAGE_FLIP_ANIM_DURATION = 300;// in ms
 
 	// for normalizing width/height
 	private static final int FLIP_DISTANCE_PER_PAGE = 180;
@@ -106,6 +105,7 @@ public class FlipView extends FrameLayout {
 	private float mLastY = -1;
 	private int mActivePointerId = INVALID_POINTER;
 
+	private int mFlipAnimationDuration;// in ms
 	// velocity stuff
 	private VelocityTracker mVelocityTracker;
 	private int mMinimumVelocity;
@@ -173,6 +173,7 @@ public class FlipView extends FrameLayout {
 
 		mDrawShadow = a.getBoolean(R.styleable.FlipView_drawShadow, true);
 		mShadowColor = a.getColor(R.styleable.FlipView_shadowColor, Color.BLACK);
+		mFlipAnimationDuration = a.getInt(R.styleable.FlipView_animationDuration, 300);
 
 		a.recycle();
 
@@ -940,7 +941,7 @@ public class FlipView extends FrameLayout {
 	 */
 	private int getFlipDuration(int deltaFlipDistance) {
 		float distance = Math.abs(deltaFlipDistance);
-		return (int) (MAX_SINGLE_PAGE_FLIP_ANIM_DURATION * Math.sqrt(distance
+		return (int) (mFlipAnimationDuration * Math.sqrt(distance
 				/ FLIP_DISTANCE_PER_PAGE));
 	}
 
