@@ -10,6 +10,7 @@ import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.graphics.*;
 import android.graphics.Paint.Style;
+import android.os.Build;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.VelocityTrackerCompat;
 import android.util.AttributeSet;
@@ -875,7 +876,7 @@ public class FlipView extends FrameLayout {
 	 * @param drawWithLayer
 	 */
 	private void setDrawWithLayer(View v, boolean drawWithLayer) {
-		if (isHardwareAccelerated()) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && isHardwareAccelerated()) {
 			if (v.getLayerType() != LAYER_TYPE_HARDWARE && drawWithLayer) {
 				v.setLayerType(LAYER_TYPE_HARDWARE, null);
 			} else if (v.getLayerType() != LAYER_TYPE_NONE && !drawWithLayer) {
