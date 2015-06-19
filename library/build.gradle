@@ -1,23 +1,45 @@
-apply plugin: 'android-library'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
 
 repositories {
     mavenCentral()
 }
+
+
+apply plugin: 'com.android.library'
+
 dependencies {
-    compile 'com.android.support:support-v4:18.0.0'
+    compile 'com.android.support:support-v4:22.1.1'
 }
 
 android {
     compileSdkVersion 22
     buildToolsVersion '22.0.1'
 
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
             java.srcDirs = ['src']
+            resources.srcDirs = ['src']
             res.srcDirs = ['res']
         }
     }
+
+    lintOptions {
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 }
 
-//apply from: '../maven_push.gradle'
+//apply from: 'https://raw.githubusercontent.com/urunimi/gradle-mvn-push/master/gradle-mvn-push.gradle'
