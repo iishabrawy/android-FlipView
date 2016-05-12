@@ -1,5 +1,6 @@
 package se.emilsjolander.flipview;
 
+import se.emilsjolander.flipview.sample.R;
 import se.emilsjolander.flipview.FlipAdapter.Callback;
 import se.emilsjolander.flipview.FlipView.OnFlipListener;
 import se.emilsjolander.flipview.FlipView.OnOverFlipListener;

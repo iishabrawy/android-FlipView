@@ -2,7 +2,7 @@
 <resources>
     
     <declare-styleable name="FlipView">
-        <attr name="orientation" format="enum">
+        <attr name="flipOrientation" format="enum">
             <enum name="vertical" value="0"/>
             <enum name="horizontal" value="1"/>
         </attr>

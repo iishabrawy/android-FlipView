@@ -1,5 +1,6 @@
 package se.emilsjolander.flipview;
 
+import se.emilsjolander.flipview.sample.R;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import android.widget.TextView;
 public class FlipAdapter extends BaseAdapter implements OnClickListener {
 	
 	public interface Callback{
-		public void onPageRequested(int page);
+		void onPageRequested(int page);
 	}
 	
 	static class Item {
